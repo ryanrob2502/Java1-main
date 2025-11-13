@@ -46,6 +46,17 @@ public class PageController {
     @Autowired
     private EmailService emailService;
 
+    @GetMapping("/")
+    public String paginaInicial(HttpSession session) {
+    // Redireciona para login se não estiver logado, ou para home se estiver logado
+    Long usuarioId = (Long) session.getAttribute("usuarioLogadoId");
+    if (usuarioId == null) {
+        return "redirect:/login";
+    } else {
+        return "redirect:/home";
+    }
+}
+
     @GetMapping("/login")
     public String paginaLogin(Model model) {
         model.addAttribute("usuario", new Registro());
